@@ -301,13 +301,13 @@
 
   <div class="display">
     <div class="tabs">
-      <button class="tab active" data-view="v1">Dot Fill</button>
-      <button class="tab" data-view="v2">Logo Grid</button>
+      <button class="tab" data-view="v1">Dot Fill</button>
+      <button class="tab active" data-view="v2">Logo Grid</button>
     </div>
     <div class="canvas-center">
       <div class="canvas-wrap">
-        <canvas id="c1"></canvas>
-        <canvas id="c2" class="hidden"></canvas>
+        <canvas id="c1" class="hidden"></canvas>
+        <canvas id="c2"></canvas>
       </div>
     </div>
   </div>
@@ -334,8 +334,8 @@
         <div class="ctrl-row">
           <div class="ctrl-label"><span class="ctrl-name">Duration</span></div>
           <div class="seg" id="durSeg">
-            <button class="seg-btn" data-dur="3">3s</button>
-            <button class="seg-btn active" data-dur="5">5s</button>
+            <button class="seg-btn active" data-dur="3">3s</button>
+            <button class="seg-btn" data-dur="5">5s</button>
             <button class="seg-btn" data-dur="10">10s</button>
             <button class="seg-btn" data-dur="15">15s</button>
           </div>
@@ -359,21 +359,21 @@
         <div class="ctrl-row">
           <div class="ctrl-label">
             <span class="ctrl-name">Wave width</span>
-            <span class="ctrl-val" id="valWave">0.35</span>
+            <span class="ctrl-val" id="valWave">0.62</span>
           </div>
-          <input type="range" id="slWave" min="0.05" max="1.5" step="0.01" value="0.35">
+          <input type="range" id="slWave" min="0.05" max="1.5" step="0.01" value="0.62">
         </div>
 
         <div class="ctrl-row">
           <div class="ctrl-label"><span class="ctrl-name">Direction</span></div>
           <div class="dir-grid">
             <button class="dir-btn" data-dir="top">↓</button>
-            <button class="dir-btn active" data-dir="left">→</button>
+            <button class="dir-btn" data-dir="left">→</button>
             <button class="dir-btn" data-dir="bottom">↑</button>
             <button class="dir-btn" data-dir="right">←</button>
             <button class="dir-btn" data-dir="radial">◎</button>
             <button class="dir-btn" data-dir="diagonal">⤢</button>
-            <button class="dir-btn dir-btn-wide" data-dir="blink">Blink</button>
+            <button class="dir-btn dir-btn-wide active" data-dir="blink">Blink</button>
           </div>
         </div>
       </div>
@@ -419,7 +419,7 @@
       <hr class="divider">
 
       <!-- V1 controls -->
-      <div class="section" id="secV1">
+      <div class="section hidden" id="secV1">
         <div class="section-label">Dot Fill</div>
         <div class="ctrl-row">
           <div class="ctrl-label">
@@ -438,7 +438,7 @@
       </div>
 
       <!-- V2 controls -->
-      <div class="section hidden" id="secV2">
+      <div class="section" id="secV2">
         <div class="section-label">Logo Grid</div>
         <div class="ctrl-row">
           <div class="ctrl-label">
@@ -459,16 +459,16 @@
         <div class="ctrl-row">
           <div class="ctrl-label">
             <span class="ctrl-name">Width</span>
-            <span class="ctrl-val" id="valGridW">560px</span>
+            <span class="ctrl-val" id="valGridW">436px</span>
           </div>
-          <input type="range" id="slGridW" min="160" max="720" step="4" value="560">
+          <input type="range" id="slGridW" min="160" max="720" step="4" value="436">
         </div>
         <div class="ctrl-row">
           <div class="ctrl-label">
             <span class="ctrl-name">Height</span>
-            <span class="ctrl-val" id="valGridH">380px</span>
+            <span class="ctrl-val" id="valGridH">148px</span>
           </div>
-          <input type="range" id="slGridH" min="120" max="560" step="4" value="380">
+          <input type="range" id="slGridH" min="120" max="560" step="4" value="148">
         </div>
 
         <div class="ctrl-row">
@@ -500,8 +500,8 @@ const LOGO_SVG_SIZE = 113;
 // ── Shared state ─────────────────────────────────────────────────────────────
 const state = {
   speed:      1.0,
-  waveWidth:  0.35,
-  direction:  'left',
+  waveWidth:  0.62,
+  direction:  'blink',
   color:      '#FFFFFF',
   minOpacity: 0.08,
   maxOpacity: 1.0,
@@ -511,12 +511,12 @@ const state = {
   spacing:    7,
   tileSize:   28,
   tileGap:    8,
-  gridW:        560,
-  gridH:        380,
-  recDuration:  5,
+  gridW:        436,
+  gridH:        148,
+  recDuration:  3,
 };
 
-let activeView = 'v1';
+let activeView = 'v2';
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 const TAU = Math.PI * 2;
@@ -993,10 +993,9 @@ window.addEventListener('DOMContentLoaded', () => {
   setupControls();
   buildDots();
   buildTiles();
-  // restore stat to active view (v1) after buildTiles overwrites it
-  document.getElementById('statCount').textContent = v1Dots.length;
-  document.getElementById('statUnit').textContent = 'dots';
-  v1Start();
+  document.getElementById('statCount').textContent = v2Tiles.length;
+  document.getElementById('statUnit').textContent = 'tiles';
+  v2Start();
 });
 </script>
 </body>
